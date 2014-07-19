@@ -2,17 +2,28 @@
 <html>
     <head>
         <title>Cory Simulator</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/yeti/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/yeti/bootstrap.min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
         <style>
         .center {text-align:center;}
         .no-margin {margin:0 auto;}
+        .hidden {display:none;}
+        .margin-bottom {margin-bottom:3px;}
         </style>
     </head>
     <body>
-        <h3 class="center">Cory Simulator</h3>
-        <div class="center no-margin" id="behavior">
-            <h3>Mood: <a id="mood"><!--MOOD--></a></h3>
+        <h1 class="center">Cory Simulator</h1>
+        <div class="center no-margin" id="mood">
+            <h3>Mood
+                <img class="hidden margin-bottom" src="http://www.freesmileys.org/smileys/smiley-basic/sleep.gif">
+                <img class="hidden margin-bottom" src="http://www.freesmileys.org/smileys/smiley-basic/tears.gif">
+                <img class="hidden margin-bottom" src="http://www.freesmileys.org/smileys/smiley-basic/biggrin.gif">
+                <img class="hidden margin-bottom" src="http://www.freesmileys.org/smileys/smiley-basic/mellow.gif">
+                <img class="hidden margin-bottom" src="http://www.freesmileys.org/smileys/smiley-basic/rant.gif">
+            </h3>
+        </div>
+        <div class="center no-margin" id="game">
+            <!-- INSERT JAVASCRIPT HERE -->
         </div>
         <div class="center no-margin" id="controller">
             <a class="btn btn-primary center" id="feed">Feed</a>
