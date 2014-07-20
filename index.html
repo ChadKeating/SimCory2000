@@ -11,38 +11,38 @@
         .hidden {display:none;}
         .margin-bottom {margin-bottom:3px;}
         textarea {resize: none;}
+        div#needs {float:left; margin-left:850px;}
+        div#mood {float:right; margin-right:850px;}
         </style>
     </head>
     <body>
         <h1 class="center">SimCory 2000</h1>
         <h4 class="center no-margin">Version 1 Alpha</h4><br>
-        <div class="center no-margin" id="controller">
-            <a class="btn btn-primary btn-sm center" id="feed">Feed</a>
-            <a class="btn btn-success btn-sm center" id="put-to-bed">Put to Bed</a>
-            <a class="btn btn-info btn-sm center" id="play">Play</a>
-            <!-- disabled for now <a class="btn btn-warning btn-sm center" id="punish">Punish</a> -->
-            <!-- disabled for now <a class="btn btn-danger btn-sm center" id="reward">Reward</a> -->
-        </div>
-        <div class="center no-margin" id="game">
-        </div><br>
-        <div class="center no-margin">
-            <textarea rows="10" cols="39" id="log" readonly></textarea>
-        </div>
         <div class="center no-margin" id="mood">
-            <h3 class="center no-margin"><b>Mood:</b>
+            <h3 class="center no-margin"><b>Mood:</b></h3>
                 <p class="hidden margin-bottom no-margin" id="sleepy"><img src="http://www.freesmileys.org/smileys/smiley-basic/sleep.gif"> Sleepy</p>
                 <p class="hidden margin-bottom no-margin" id="sad"><img src="http://www.freesmileys.org/smileys/smiley-basic/tears.gif"> Sad</p>
                 <p class="hidden margin-bottom no-margin" id="happy"><img src="http://www.freesmileys.org/smileys/smiley-basic/biggrin.gif"> Happy</p>
                 <p class="hidden margin-bottom no-margin" id="content"><img src="http://www.freesmileys.org/smileys/smiley-basic/mellow.gif"> Content</p>
                 <p class="hidden margin-bottom no-margin" id="angry"><img src="http://www.freesmileys.org/smileys/smiley-basic/rant.gif"> Angry</p>
             </h3>
-        </div><br>
+        </div>
         <div class="center no-margin" id="needs">
-            <h3 class="center no-margin"><b>Need(s):</b>
+            <h3 class="center no-margin"><b>Need(s):</b></h3>
                 <p class="hidden no-margin" id="hunger">Hunger</p>
                 <p class="hidden no-margin" id="boredom" >Boredom</p>
                 <p class="hidden no-margin" id="sleep">Sleep</p>
             </h3>
+        </div><br><br><br><br><br>
+        <div class="center no-margin">
+            <textarea rows="10" cols="35" id="log" readonly></textarea>
+        </div>
+        <div class="center no-margin" id="controller">
+            <a class="btn btn-primary btn-sm center" id="feed">Feed</a>
+            <a class="btn btn-success btn-sm center" id="put-to-bed">Put to Bed</a>
+            <a class="btn btn-info btn-sm center" id="play">Play</a>
+            <!-- disabled for now <a class="btn btn-warning btn-sm center" id="punish">Punish</a> -->
+            <!-- disabled for now <a class="btn btn-danger btn-sm center" id="reward">Reward</a> -->
         </div>
     </body>
 </html>
