@@ -1,0 +1,23 @@
+﻿.hidden {
+	display: none;
+}
+
+textarea {
+	resize: none;
+}
+
+#mood {
+
+	width: 250px;
+}
+
+#needs {
+	width: 250px;
+
+}
+
+#gameContainer {
+border:solid 1px black;
+padding:4px;
+
+}
