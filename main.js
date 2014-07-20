@@ -1,5 +1,11 @@
 var CorySim = {};
-var LG = console.log;
+var logCount = 0;
+var LG = function (text) {
+	text = "[" + logCount + "] " + text + "\n";
+
+	$("#log").prepend(text);
+	logCount++;
+}
 /*
 
 behaviours
@@ -85,11 +91,15 @@ CorySim.Behaviour = {};
 	self.tick_Behaviour = function () {
 
 		if (currentAction == 0) {
+			currentBehaviour = b.IDLE;
+			CorySim.Mood.update();
 			return;
 		}
 		if (currentBehaviour == b.IDLE) {
+			CorySim.Mood.update();
 			return;
 		}
+
 		switch (currentBehaviour) {
 			case b.IDLE:
 				LG("Cory is doing nothing...");
@@ -114,7 +124,7 @@ CorySim.Mood = {};
 (function (self) {
 	var m = CorySim.ENUM.MOOD;
 
-	var currentMood = b.CONTENT;
+	var currentMood = m.CONTENT;
 
 	var moodLow = 0;
 	var moodHigh = 100;
@@ -135,6 +145,7 @@ CorySim.Mood = {};
 	}
 
 	self.update = function () {
+
 		updateNeeds();
 		updateMood();
 
@@ -146,15 +157,32 @@ CorySim.Mood = {};
 			setMood(m.CONTENT);
 		}
 
+		LG((function () {
+			var ntext = ""
+			for (var x = 0; x < NEEDS.length; x++) {
+				switch (x) {
+					case 0:
+						ntext += "Hunger: " + NEEDS[x];
+						break;
+					case 1:
+						ntext += ", Boredom: " + NEEDS[x];
+						break;
+					case 2:
+						ntext += ", Sleep: " + NEEDS[x];
+						break;
+				}
+			}
+			return ntext;
+		})())
 
 	}
 
 	function updateMood() {
 		var moodIncrease = 4;
-		var moodDecrease = 4 + moodIncrease;
+		var moodDecrease = 14 + moodIncrease;
 
-		for (var x = 0; x > NEEDS.length; x++) {
-			if (NEEDS[x] < 50) {
+		for (var x = 0; x < NEEDS.length; x++) {
+			if (NEEDS[x] > 50) {
 				happiness = happiness - (moodDecrease / 2);
 			} else {
 				happiness = happiness + (moodIncrease / 2);
@@ -172,11 +200,15 @@ CorySim.Mood = {};
 
 	function updateNeeds() {
 
-		var needIncrease = 4;
-		var needDecrease = 4 + needIncrease;
+		var needIncrease = 2;
+		var needDecrease = 14 + needIncrease;
 
-		for (var x = 0; x > NEEDS.length; x++) {
+		for (var x = 0; x < NEEDS.length; x++) {
 			NEEDS[x] = NEEDS[x] + needIncrease;
+			if (NEEDS[x] > moodHigh) {
+				NEEDS[x] = moodHigh;
+			}
+
 		}
 
 		var cb = CorySim.Behaviour.get()
@@ -185,16 +217,26 @@ CorySim.Mood = {};
 				break;
 			case 1:
 				//Eating
-				NEEDS[cb + 1] = NEEDS[cb - 1] + needDecrease;
+				NEEDS[cb - 1] = NEEDS[cb - 1] - needDecrease;
 				break;
 			case 2:
 				//Playing
-				NEEDS[cb + 1] = NEEDS[cb - 1] + needDecrease;
+				NEEDS[cb - 1] = NEEDS[cb - 1] - needDecrease;
 				break;
 			case 3:
 				//Sleeping
-				NEEDS[cb + 1] = NEEDS[cb - 1] + needDecrease;
+				NEEDS[cb - 1] = NEEDS[cb - 1] - needDecrease;
 				break;
+		}
+
+		for (var x = 0; x < NEEDS.length; x++) {
+			NEEDS[x] = NEEDS[x] + needIncrease;
+			if (NEEDS[x] > moodHigh) {
+				NEEDS[x] = moodHigh;
+			} else if (NEEDS[x] < moodLow) {
+				NEEDS[x] = moodLow;
+			}
+
 		}
 	}
 
@@ -207,26 +249,26 @@ CorySim.UI = {};
 
 	function updateMood() {
 		var mood = CorySim.Mood.getMood();
-		var children = $("#mood").find("h3").children()
-		children.hide()
-		children[mood].show();
+		var children = $("#mood").find("p");
+		children.addClass("hidden")
+		$(children[mood]).removeClass("hidden");
 	};
 
 
 	function updateNeeds() {
 		var needs = CorySim.Mood.getNeeds();
-		var children = $("#needs").find("h3").children();
+		var children = $("#needs").find("p");
 		needs.forEach(function (e, i) {
 			if (e < 50) {
-				children[i].hide()
+				$(children[i]).addClass("hidden")
 			} else if (e > 50) {
-				children[i].show();
+				$(children[i]).removeClass("hidden");;
 			}
 		});
 	};
 
 
-	self.updateUI = function () {
+	self.update = function () {
 
 		updateMood();
 		updateNeeds();
@@ -291,25 +333,26 @@ CorySim.Core = {};
 	};
 
 	self.pendingTasks = [];
-	var gameTick = 1000
+	var gameTick = 2000;
+	var tick = 0;
 	self.newTurn = function () {
 		if (gamePaused) {
 			waitNextTurn();
 		} else {
-
-			CorySim.Behaviour.tick_Behaviour;
+			CorySim.Behaviour.tick_Behaviour();
 			CorySim.UI.update();
 
 			self.pendingTasks.forEach(function (e) {
 				e();
 			});
+			self.pendingTasks = [];
 
 			waitNextTurn();
 		}
 	};
 
 	function waitNextTurn() {
-		setInterval(self.newTurn(), gameTick)
+		setTimeout(self.newTurn, gameTick)
 	}
 
 	self.init = function () {
@@ -322,8 +365,10 @@ CorySim.Core = {};
 
 
 
+$(document).ready(function () {
+	CorySim.Core.init();
+});
 
-CorySim.Core.init();
 
 
 
